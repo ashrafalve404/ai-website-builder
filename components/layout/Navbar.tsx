@@ -2,12 +2,13 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/utils";
 import { Button } from "@/components/ui/button";
+
+const BASE_PATH = "/ai-website-builder";
 
 const navLinks = [
   { href: "/#features", label: "Features" },
@@ -46,14 +47,11 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="relative h-9 w-9">
-              <Image
-                src="/logo.png"
-                alt="SiteForge"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <img
+              src={`${BASE_PATH}/logo.png`}
+              alt="SiteForge"
+              className="h-9 w-9 object-contain"
+            />
             <span className="font-bold text-xl">SiteForge</span>
           </Link>
 

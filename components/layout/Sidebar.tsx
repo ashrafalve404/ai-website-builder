@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import {
@@ -31,6 +30,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore, useUIStore } from "@/store";
 
+const BASE_PATH = "/ai-website-builder";
+
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/builder", label: "Builder", icon: Wand2 },
@@ -55,14 +56,11 @@ export function Sidebar() {
     <>
       <div className="flex h-16 items-center justify-between px-4 border-b border-border">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="relative h-9 w-9 shrink-0">
-            <Image
-              src="/logo.png"
-              alt="SiteForge"
-              fill
-              className="object-contain"
-            />
-          </div>
+          <img
+            src={`${BASE_PATH}/logo.png`}
+            alt="SiteForge"
+            className="h-9 w-9 object-contain shrink-0"
+          />
           {!isSidebarCollapsed && (
             <motion.span
               initial={{ opacity: 0, x: -10 }}

@@ -2,8 +2,9 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/utils";
+
+const BASE_PATH = "/ai-website-builder";
 
 const footerLinks = {
   product: [
@@ -30,14 +31,11 @@ export function Footer() {
         <div className="py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="relative h-8 w-8">
-                <Image
-                  src="/logo.png"
-                  alt="SiteForge"
-                  fill
-                  className="object-contain"
-                />
-              </div>
+              <img
+                src={`${BASE_PATH}/logo.png`}
+                alt="SiteForge"
+                className="h-8 w-8 object-contain"
+              />
               <span className="font-bold text-lg">SiteForge</span>
             </Link>
             <p className="text-sm text-muted-foreground">

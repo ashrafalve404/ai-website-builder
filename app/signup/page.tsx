@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Loader2, Mail, Lock, User, Github } from "lucide-react";
@@ -12,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useAuthStore } from "@/store";
+
+const BASE_PATH = "/ai-website-builder";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -49,14 +50,11 @@ export default function SignupPage() {
       >
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-4">
-            <div className="relative h-12 w-12">
-              <Image
-                src="/logo.png"
-                alt="SiteForge"
-                fill
-                className="object-contain"
-              />
-            </div>
+            <img
+              src={`${BASE_PATH}/logo.png`}
+              alt="SiteForge"
+              className="h-12 w-12 object-contain"
+            />
           </Link>
           <h1 className="text-3xl font-bold">Create an account</h1>
           <p className="text-muted-foreground mt-2">
