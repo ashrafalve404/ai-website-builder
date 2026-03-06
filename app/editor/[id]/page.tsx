@@ -7,6 +7,11 @@ export function generateStaticParams() {
     { id: "3" },
     { id: "4" },
     { id: "5" },
+    { id: "6" },
+    { id: "7" },
+    { id: "8" },
+    { id: "9" },
+    { id: "10" },
   ];
 }
 
@@ -14,6 +19,7 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-export default function EditorPage({ params }: PageProps) {
-  return <EditorClient params={params} />;
+export default async function EditorPage({ params }: PageProps) {
+  const { id } = await params;
+  return <EditorClient id={id} />;
 }

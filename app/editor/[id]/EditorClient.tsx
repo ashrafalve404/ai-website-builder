@@ -22,13 +22,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface EditorClientProps {
-  params: Promise<{ id: string }>;
+  id: string;
 }
 
-export default function EditorClient({ params }: EditorClientProps) {
-  const resolvedParams = React.use(params);
+export default function EditorClient({ id }: EditorClientProps) {
+  const projectId = id;
   const router = useRouter();
-  const projectId = resolvedParams.id;
 
   const [viewMode, setViewMode] = React.useState<"desktop" | "tablet" | "mobile">("desktop");
   const [isSaving, setIsSaving] = React.useState(false);
