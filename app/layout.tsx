@@ -25,6 +25,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('load', function() {
+                if (window.location.hash) {
+                  setTimeout(function() {
+                    var target = document.querySelector(window.location.hash);
+                    if (target) {
+                      var offset = 64;
+                      var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                      window.scrollTo({ top: top, behavior: 'smooth' });
+                    }
+                  }, 100);
+                }
+              });
+            `,
+          }}
+        />
+      </head>
       <body className={`${inter.variable} antialiased`}>
         <TooltipProvider>
           <Navbar />
