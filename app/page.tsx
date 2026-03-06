@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Footer } from "@/components/layout/Footer";
 
 const features = [
   {
@@ -436,26 +437,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="py-12 border-t border-border">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <div className="relative h-8 w-8">
-                <Image
-                  src="/logo.png"
-                  alt="SiteForge"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="font-bold">SiteForge</span>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              © 2024 SiteForge. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

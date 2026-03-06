@@ -32,9 +32,7 @@ export function Navbar() {
   const isEditor = pathname.startsWith("/editor");
   const isAppPage = pathname !== "/" && !pathname.startsWith("/login") && !pathname.startsWith("/signup");
 
-  if (isAppPage) {
-    return null;
-  }
+  // Always show navbar on all pages for GitHub Pages compatibility
 
   return (
     <header
