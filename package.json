@@ -2,6 +2,7 @@
   "name": "aiwebsite",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ashrafalve404.github.io/ai-website-builder/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
