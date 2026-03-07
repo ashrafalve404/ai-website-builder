@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -13,6 +14,9 @@ import {
   Layers,
   ArrowRight,
   Check,
+  ChevronLeft,
+  ChevronRight,
+  Star,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -148,7 +152,60 @@ const examples = [
   },
 ];
 
+const testimonials = [
+  {
+    name: "Sarah Chen",
+    role: "Frontend Developer",
+    company: "TechCorp",
+    content: "SiteForge saved me hours of work. The AI-generated code is clean and production-ready!",
+    rating: 5,
+  },
+  {
+    name: "Michael Rodriguez",
+    role: "Startup Founder",
+    company: "LaunchPad",
+    content: "We built our entire MVP in a day. The quality of the generated websites is incredible.",
+    rating: 5,
+  },
+  {
+    name: "Emily Watson",
+    role: "UX Designer",
+    company: "DesignStudio",
+    content: "Finally, a tool that bridges the gap between design and development. Game changer!",
+    rating: 5,
+  },
+  {
+    name: "David Kim",
+    role: "Full Stack Developer",
+    company: "DevAgency",
+    content: "The code quality is impressive. I've used it for client projects with great results.",
+    rating: 5,
+  },
+  {
+    name: "Jessica Lee",
+    role: "Product Manager",
+    company: "InnovateTech",
+    content: "Our team velocity increased 10x. SiteForge handles the heavy lifting so we focus on features.",
+    rating: 5,
+  },
+  {
+    name: "Alex Thompson",
+    role: "Freelancer",
+    company: "Self-employed",
+    content: "I deliver projects 3x faster now. My clients are amazed at how quickly we go from concept to launch.",
+    rating: 5,
+  },
+];
+
 export default function LandingPage() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="min-h-screen bg-background">
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -344,6 +401,110 @@ export default function LandingPage() {
                 </Card>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="testimonials" className="py-24 relative overflow-hidden bg-card/30">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold mb-4">Loved by developers</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              See what our community has to say about SiteForge
+            </p>
+          </motion.div>
+
+          <div className="relative">
+            <div className="flex justify-center items-center gap-4 h-80">
+              {testimonials.map((testimonial, i) => {
+                const distance = Math.abs(i - activeIndex);
+                const isActive = i === activeIndex;
+                const isPrev = i === (activeIndex - 1 + testimonials.length) % testimonials.length;
+                const isNext = i === (activeIndex + 1) % testimonials.length;
+                const isVisible = isActive || isPrev || isNext;
+                
+                if (!isVisible) return null;
+                
+                return (
+                  <motion.div
+                    key={testimonial.name}
+                    className="absolute"
+                    initial={false}
+                    animate={{
+                      scale: isActive ? 1 : 0.75,
+                      x: isActive ? 0 : (isPrev ? -280 : 280),
+                      zIndex: isActive ? 10 : 1,
+                      opacity: isActive ? 1 : 0.4,
+                      rotateY: isActive ? 0 : (isPrev ? 15 : -15),
+                    }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    style={{
+                      transformStyle: "preserve-3d",
+                      perspective: "1500px",
+                    }}
+                  >
+                    <Card className={`w-80 ${isActive ? "border-primary glow-accent" : ""}`}>
+                      <CardContent className="p-6">
+                        <div className="flex gap-1 mb-4">
+                          {[...Array(testimonial.rating)].map((_, idx) => (
+                            <Star key={idx} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                        <p className="text-muted-foreground mb-6 italic">
+                          {testimonial.content}
+                        </p>
+                        <div className="flex items-center gap-3">
+                          <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center">
+                            <span className="text-primary font-bold">
+                              {testimonial.name.charAt(0)}
+                            </span>
+                          </div>
+                          <div>
+                            <p className="font-semibold text-sm">{testimonial.name}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {testimonial.role} at {testimonial.company}
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            <div className="flex justify-center gap-4 mt-8">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <div className="flex gap-2">
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveIndex(i)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      i === activeIndex ? "bg-primary w-6" : "bg-muted-foreground/30"
+                    }`}
+                  />
+                ))}
+              </div>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setActiveIndex((prev) => (prev + 1) % testimonials.length)}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </section>

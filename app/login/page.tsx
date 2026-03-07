@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useAuthStore } from "@/store";
 
-const BASE_PATH = "/ai-website-builder";
+const BASE_PATH = process.env.NODE_ENV === "production" ? "/ai-website-builder" : "";
 
 export default function LoginPage() {
   const router = useRouter();

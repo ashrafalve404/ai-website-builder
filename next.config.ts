@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  // Note: Dynamic routes like /editor/[id] require pre-defined IDs in generateStaticParams
+  // For full dynamic editor functionality, consider deploying to Vercel instead
 };
 
 export default nextConfig;

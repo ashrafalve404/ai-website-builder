@@ -35,7 +35,14 @@ interface EditorClientProps {
   id: string;
 }
 
-const fileTree = [
+interface FileTreeItemType {
+  name: string;
+  type: "folder" | "file";
+  language?: string;
+  children?: FileTreeItemType[];
+}
+
+const fileTree: FileTreeItemType[] = [
   {
     name: "src",
     type: "folder",
@@ -174,7 +181,7 @@ const previewHTML = `<!DOCTYPE html>
 </body>
 </html>`;
 
-function FileTreeItem({ item, depth, onSelect, selectedFile }: { item: any; depth: number; onSelect: (name: string) => void; selectedFile: string }) {
+function FileTreeItem({ item, depth, onSelect, selectedFile }: { item: FileTreeItemType; depth: number; onSelect: (name: string) => void; selectedFile: string }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const isFolder = item.type === "folder";
   const isSelected = !isFolder && item.name === selectedFile;
@@ -199,7 +206,7 @@ function FileTreeItem({ item, depth, onSelect, selectedFile }: { item: any; dept
         )}
         <span className="truncate">{item.name}</span>
       </div>
-      {isFolder && isOpen && item.children?.map((child: any, i: number) => (
+        {isFolder && isOpen && item.children?.map((child, i) => (
         <FileTreeItem key={i} item={child} depth={depth + 1} onSelect={onSelect} selectedFile={selectedFile} />
       ))}
     </div>
@@ -212,7 +219,7 @@ export default function EditorClient({ id }: EditorClientProps) {
 
   const [viewMode, setViewMode] = React.useState<"desktop" | "tablet" | "mobile">("desktop");
   const [isSaving, setIsSaving] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState("code");
+  const [activeTab, setActiveTab] = React.useState<"code" | "preview" | "console">("code");
   const [selectedFile, setSelectedFile] = React.useState("App.tsx");
   const [code, setCode] = React.useState(sampleCode["App.tsx"]);
   const [copied, setCopied] = React.useState(false);

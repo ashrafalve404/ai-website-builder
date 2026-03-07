@@ -8,7 +8,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/utils";
 import { Button } from "@/components/ui/button";
 
-const BASE_PATH = "/ai-website-builder";
+const BASE_PATH = process.env.NODE_ENV === "production" ? "/ai-website-builder" : "";
 
 const navLinks = [
   { href: "/#features", label: "Features" },

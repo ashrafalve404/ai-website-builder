@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore, useUIStore } from "@/store";
 
-const BASE_PATH = "/ai-website-builder";
+const BASE_PATH = process.env.NODE_ENV === "production" ? "/ai-website-builder" : "";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -44,15 +44,27 @@ const adminNavItems = [
   { href: "/admin", label: "Admin", icon: Shield },
 ];
 
-export function Sidebar() {
-  const pathname = usePathname();
-  const { user, logout } = useAuthStore();
-  const { isSidebarCollapsed, toggleSidebar } = useUIStore();
-  const [isMobileOpen, setIsMobileOpen] = React.useState(false);
-
+// SidebarContent component defined outside to fix ESLint error
+function SidebarContent({ 
+  isSidebarCollapsed, 
+  isMobileOpen, 
+  setIsMobileOpen,
+  pathname,
+  user, 
+  logout,
+  toggleSidebar
+}: { 
+  isSidebarCollapsed: boolean; 
+  isMobileOpen: boolean; 
+  setIsMobileOpen: (open: boolean) => void;
+  pathname: string;
+  user: { name: string; email: string; avatar?: string; role?: string } | null;
+  logout: () => void;
+  toggleSidebar: () => void;
+}) {
   const isActive = (href: string) => pathname.startsWith(href);
 
-  const SidebarContent = () => (
+  return (
     <>
       <div className="flex h-16 items-center justify-between px-4 border-b border-border">
         <Link href="/dashboard" className="flex items-center gap-2">
@@ -202,6 +214,13 @@ export function Sidebar() {
       </div>
     </>
   );
+}
+
+export function Sidebar() {
+  const pathname = usePathname();
+  const { user, logout } = useAuthStore();
+  const { isSidebarCollapsed, toggleSidebar } = useUIStore();
+  const [isMobileOpen, setIsMobileOpen] = React.useState(false);
 
   return (
     <>
@@ -228,7 +247,15 @@ export function Sidebar() {
           isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
-        <SidebarContent />
+        <SidebarContent 
+          isSidebarCollapsed={isSidebarCollapsed}
+          isMobileOpen={isMobileOpen}
+          setIsMobileOpen={setIsMobileOpen}
+          pathname={pathname}
+          user={user}
+          logout={logout}
+          toggleSidebar={toggleSidebar}
+        />
       </aside>
 
       <Button
